@@ -52,7 +52,7 @@ export default {
     // TODO: 自分で定義したファイルに置き換える
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
