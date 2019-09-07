@@ -1,20 +1,15 @@
 <template lang="pug">
-v-layout
-  v-flex.text-center
-    v-layout(wrap='', text-xs-center='')
-      v-flex(xs12='')
-        canvas#canvas(:width='size.width', :height='size.height', ref='canvas')
-    v-layout.mt-3(v-if='context != null' wrap='', justify-center='', color='#333')
-      v-flex.pa-2(xs12='', sm4='')
-        v-text-field.textarea(v-model='name', outline='', hide-details='', label='名前', rows='3', color='#333', style='margin: auto;', @input='drawImage')
-      v-flex.pa-2(xs12='', sm4='')
-        v-textarea.textarea(v-model='body', outline='', hide-details='', label='本文', rows='3', color='#333', style='margin: auto;', @input='drawImage')
-      v-flex.pa-2(xs12='', sm4='')
-        v-layout
-          v-flex.mr-1
-            v-slider(v-model='font.size', label='font-size', color='#333', min='10', max='150', @input='drawImage')
-          v-flex.ml-2
-            v-text-field(v-model='font.size', hide-details='', color='#333', type='number', suffix='px', style='width: 56px;', @input='drawImage')
+v-layout.px-2.py-2.row.wrap
+  v-flex.lg6.sm12.xs12.text-center
+    canvas#canvas(:width='size.width' :height='size.height' ref='canvas')
+  v-flex.lg6.sm12.xs12.align-self-center(v-if='context != null')
+    v-text-field.textarea(v-model='name', outline hide-details label='名前', rows='3', color='#333', style='margin: auto;', @input='drawImage')
+    v-textarea.textarea(v-model='body', outline hide-details label='本文', rows='3', color='#333', style='margin: auto;', @input='drawImage')
+    v-layout
+      v-flex.mr-1
+        v-slider(v-model='font.size', label='フォントサイズ', color='#333', min='10', max='150', @input='drawImage')
+      v-flex.ml-2
+        v-text-field(v-model='font.size', hide-details color='#333', type='number', suffix='px', style='width: 56px;', @input='drawImage')
 </template>
 
 <script>
