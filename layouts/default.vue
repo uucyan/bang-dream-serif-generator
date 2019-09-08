@@ -1,36 +1,36 @@
 <template lang="pug">
-v-app(dark='')
-  v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed='', app='')
-    v-list
-      v-list-item(v-for='(item, i) in items', :key='i', :to='item.to', router='', exact='')
-        v-list-item-action
-          v-icon {{ item.icon }}
-        v-list-item-content
-          v-list-item-title(v-text='item.title')
-  v-app-bar(:clipped-left='clipped', fixed='', app='')
-    v-app-bar-nav-icon(@click.stop='drawer = !drawer')
-    v-btn(icon='', @click.stop='miniVariant = !miniVariant')
-      v-icon mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}
-    v-btn(icon='', @click.stop='clipped = !clipped')
-      v-icon mdi-application
-    v-btn(icon='', @click.stop='fixed = !fixed')
-      v-icon mdi-minus
+//- v-app.overflow-hidden(dark='')
+//-   v-app-bar(
+//-     absolute
+//-     color='#43a047'
+//-     dark
+//-     shrink-on-scroll
+//-     prominent
+//-     src='https://picsum.photos/1920/1080?random'
+//-     fade-img-on-scroll
+//-     scroll-target='#scrolling-techniques-5'
+//-     scroll-threshold='100'
+//-   )
+//-     template(v-slot:img='{ props }')
+//-       v-img(v-bind='props', gradient='to top right, rgba(55,236,186,.7), rgba(25,32,72,.7)')
+//-     v-app-bar-nav-icon
+//-     v-toolbar-title Title
+//-     .flex-grow-1
+//-     v-btn(icon='')
+//-       v-icon mdi-magnify
+//-     v-btn(icon='')
+//-       v-icon mdi-heart
+//-     v-btn(icon='')
+//-       v-icon mdi-dots-vertical
+//-   v-content#scrolling-techniques-5.overflow-y-auto(style='max-height: 100vh; padding-top: 128px;')
+//-     v-container
+//-       nuxt
+v-app(dark)
+  v-app-bar(fixed app)
     v-toolbar-title(v-text='title')
-    v-spacer
-    v-btn(icon='', @click.stop='rightDrawer = !rightDrawer')
-      v-icon mdi-menu
   v-content
     v-container
       nuxt
-  v-navigation-drawer(v-model='rightDrawer', :right='right', temporary='', fixed='')
-    v-list
-      v-list-item(@click.native='right = !right')
-        v-list-item-action
-          v-icon(light='')
-            | mdi-repeat
-        v-list-item-title Switch drawer (click me)
-  v-footer(:fixed='fixed', app='')
-    span © 2019
 </template>
 
 <script>
@@ -38,26 +38,14 @@ v-app(dark='')
 export default {
   data () {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'バンドリ！ セリフジェネレーター！',
     }
   },
 }
 </script>
+
+<style lang="scss">
+// html {
+//   overflow: hidden;
+// }
+</style>
