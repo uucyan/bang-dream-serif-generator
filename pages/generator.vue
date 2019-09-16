@@ -46,91 +46,48 @@ v-layout.px-2.py-2.row.wrap
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from 'vuex'
+
 export default {
   data () {
     return {
-      // フォントの設定
-      font: {
-        family: 'Meiryo',
-        size: 25,
-        lineHeightOffset: 4,
-      },
-      // TODO: 一旦固定にしてる
-      // imgsrc: 'image/chisato_shirasagi.png',
-      imgsrc: 'image/kanon_matsubara.png',
-      // 実際に表示する画像サイズ（Canvas サイズもこれを使用する）
-      size: {
-        width: 525,
-        height: 788,
-      },
-      context: null,
-      name: '',
-      body: '',
-      sheet: false,
     }
   },
-  mounted () {
-    // Canvas の初期化
-    this.initCanvas()
-    // 画像描画
-    this.drawImage()
+
+  computed: {
+    ...mapState('canvas', [
+      'context',
+      'size',
+      'font',
+    ]),
+
+    name: {
+      get () { return this.$store.state.canvas.name },
+      set (value) { this.$store.commit('canvas/setName', value) },
+    },
+
+    body: {
+      get () { return this.$store.state.canvas.body },
+      set (value) { this.$store.commit('canvas/setBody', value) },
+    },
   },
+
+  mounted () {
+    this.initCanvas(this.$refs.canvas.getContext('2d'))
+  },
+
   methods: {
-    /**
-     * Canvas の初期化
-     */
-    initCanvas () {
-      this.context = this.$refs.canvas.getContext('2d')
-      this.context.textAlign = 'left'
-      this.context.textBaseline = 'middle'
-    },
+    ...mapMutations('canvas', [
+      'setContext',
+    ]),
 
-    /**
-     * 画像に名前を描画
-     */
-    drawName () {
-      this.context.fillStyle = '#ffffff'
-      this.context.fillText(this.name, 65, 616.1)
-    },
+    ...mapActions('canvas', {
+      initCanvas: 'init',
+    }),
 
-    /**
-     * 画像に本文を描画
-     */
-    drawBody () {
-      this.context.fillStyle = '#000000'
-      const body = this.body
-
-      let lines = [body]
-
-      if (body.includes('\n')) {
-        lines = body.split('\n')
-      }
-
-      lines.forEach((line, idx) => {
-        this.context.fillText(
-          line,
-          70, // X 座標
-          657 + idx * (this.font.size + this.font.lineHeightOffset) // Y 座標
-        )
-      })
-    },
-
-    /**
-     * 画像の描画
-     */
-    drawImage () {
-      // Canvas のクリア
-      this.context.clearRect(0, 0, this.size.width, this.size.height)
-
-      const img = new Image()
-      img.src = this.imgsrc
-      img.onload = () => {
-        this.context.drawImage(img, 0, 0, this.size.width, this.size.height)
-        this.context.font = `${this.font.size}px '${this.font.family}'`
-        this.drawName()
-        this.drawBody()
-      }
-    },
+    ...mapActions('canvas', [
+      'drawImage',
+    ]),
   },
 }
 </script>
