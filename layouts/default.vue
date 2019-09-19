@@ -35,7 +35,7 @@ v-app(dark)
     v-container#playground-example.overflow-y-auto(style='max-height: 100vh; max-width: 100vw; padding-bottom: 80px;')
       nuxt
 
-    v-bottom-navigation(scroll-target='#scroll-area-1' absolute grow color='teal')
+    v-bottom-navigation(scroll-target='#playground-example' absolute grow color='teal')
       v-btn
         span サイトについて
         v-icon mdi-information-outline
@@ -45,8 +45,8 @@ v-app(dark)
       v-bottom-sheet(v-model='sheet', hide-overlay)
         template(v-slot:activator='{ on }')
           v-btn(v-on='on')
-            span 編集
-            v-icon mdi-square-edit-outline
+            span キャラ変更
+            v-icon mdi-image-filter
         v-sheet.text-center
           v-btn.mt-6(text='', color='error', @click='sheet = !sheet') 閉じる
 

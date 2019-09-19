@@ -6,16 +6,34 @@ export const state = () => ({
     lineHeightOffset: 4,
   },
   // TODO: 一旦固定にしてる
-  // imgsrc: 'image/chisato_shirasagi.png',
-  imgsrc: 'image/kanon_matsubara.png',
+  imgsrc: 'image/chisato_shirasagi.png',
+  // imgsrc: 'image/kanon_matsubara.png',
   // 実際に表示する画像サイズ（Canvas サイズもこれを使用する）
   size: {
     width: 525,
     height: 788,
   },
   context: null,
-  name: '',
-  body: '',
+  name: {
+    text: '',
+    color: '#FFFFFFFF',
+    x: 65,
+    y: 616.1,
+    font: {
+      family: 'Meiryo',
+      size: 25,
+    },
+  },
+  body: {
+    text: '',
+    color: '#000000FF',
+    x: 70,
+    y: 657,
+    font: {
+      family: 'Meiryo',
+      size: 25,
+    },
+  },
 })
 
 export const getters = {
@@ -29,24 +47,39 @@ export const mutations = {
     state.context = context
   },
 
-  setName (state, value) {
-    state.name = value
+  setNameText (state, value) {
+    state.name.text = value
   },
 
-  setBody (state, value) {
-    state.body = value
+  setNameColor (state, value) {
+    state.name.color = value
+  },
+
+  setNameFontSize (state, value) {
+    state.name.font.size = value
+  },
+
+  setBodyText (state, value) {
+    state.body.text = value
+  },
+
+  setBodyColor (state, value) {
+    state.body.color = value
+  },
+
+  setBodyFontSize (state, value) {
+    state.body.font.size = value
   },
 }
 
 export const actions = {
-/**
+  /**
    * Canvas の初期化
    */
   init ({ state, commit, dispatch }, context) {
     commit('setContext', context)
     state.context.textAlign = 'left'
     state.context.textBaseline = 'middle'
-    state.context.font = `${state.font.size}px '${state.font.family}'`
 
     dispatch('drawImage')
   },
@@ -55,6 +88,10 @@ export const actions = {
    * 画像の描画
    */
   drawImage ({ state, dispatch }) {
+    if (state.context == null) {
+      return
+    }
+
     // Canvas の描画をクリア
     state.context.clearRect(0, 0, state.size.width, state.size.height)
 
@@ -71,16 +108,18 @@ export const actions = {
    * 画像に名前を描画
    */
   drawName ({ state }) {
-    state.context.fillStyle = '#ffffff'
-    state.context.fillText(state.name, 65, 616.1)
+    state.context.font = `${state.name.font.size}px '${state.name.font.family}'`
+    state.context.fillStyle = state.name.color
+    state.context.fillText(state.name.text == null ? '' : state.name.text, state.name.x, state.name.y)
   },
 
   /**
    * 画像に本文を描画
    */
   drawBody ({ state }) {
-    state.context.fillStyle = '#000000'
-    const body = state.body
+    state.context.font = `${state.body.font.size}px '${state.body.font.family}'`
+    state.context.fillStyle = state.body.color
+    const body = state.body.text == null ? '' : state.body.text
 
     let lines = [body]
 
@@ -91,8 +130,8 @@ export const actions = {
     lines.forEach((line, idx) => {
       state.context.fillText(
         line,
-        70, // X 座標
-        657 + idx * (state.font.size + state.font.lineHeightOffset) // Y 座標
+        state.body.x,
+        state.body.y + idx * (state.body.font.size + state.font.lineHeightOffset)
       )
     })
   },
