@@ -10,17 +10,38 @@ v-layout.px-2.py-2.row.wrap
     v-layout.pt-2
       BodyTextarea
 
-    v-layout.pt-2.text-center
-      v-flex.pl-2.pr-2
-        NameColorPicker
-      v-flex.pl-2.pr-2
-        BodyColorPicker
+    //- v-layout.pt-2.text-center
+    //-   v-flex.pl-2.pr-2
+    //-     NameColorPicker
+    //-   v-flex.pl-2.pr-2
+    //-     BodyColorPicker
 
-    v-layout.pt-2
-      NameFontSizeSlider
+    //- v-layout.pt-2
+    //-   NameFontSizeSlider
 
-    v-layout.pt-2
-      BodyFontSizeSlider
+    //- v-layout.pt-2
+    //-   BodyFontSizeSlider
+
+    v-layout
+      v-expansion-panels
+        v-expansion-panel(style='background-color: transparent; border-radius: 28px;')
+          v-expansion-panel-header 名前の詳細設定
+          v-expansion-panel-content
+            v-layout.pt-2.text-center
+              v-flex.pl-2.pr-2
+                NameColorPicker
+            v-layout.pt-2
+              NameFontSizeSlider
+
+    v-layout.pt-4
+      v-expansion-panels
+        v-expansion-panel(style='background-color: transparent; border-radius: 28px;')
+          v-expansion-panel-header 本文の詳細設定
+          v-expansion-panel-content
+            v-layout.pt-2
+              BodyColorPicker
+            v-layout.pt-2
+              BodyFontSizeSlider
 </template>
 
 <script>

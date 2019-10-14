@@ -2,7 +2,7 @@
 v-menu(v-model='menu' :close-on-content-click='false' :nudge-width='250' transition='scale-transition')
   template(v-slot:activator='{ on }')
     v-btn(v-on='on' outlined rounded block large color='#00000070')
-      v-icon(left) mdi-palette
+      v-icon(left size='30' :color='nameColor') mdi-palette
       | 名前の色
   v-card
     v-list
