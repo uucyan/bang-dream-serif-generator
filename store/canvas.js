@@ -5,20 +5,31 @@ export const state = () => ({
     size: 25,
     lineHeightOffset: 4,
   },
-  // TODO: 一旦固定にしてる
-  imgsrc: 'image/chisato_shirasagi.png',
+  // imgsrc: 'image/chisato_shirasagi.png',
+  // imgsrc: 'image/kanon.png',
   // imgsrc: 'image/kanon_matsubara.png',
   // 実際に表示する画像サイズ（Canvas サイズもこれを使用する）
-  size: {
+  character: {
+    // TODO: 一旦固定にしてる
+    src: 'image/kanon_matsubara.png',
+    x: 0,
+    y: 0,
     width: 525,
     height: 788,
+  },
+  inputArea: {
+    src: 'image/input_area.png',
+    x: 0,
+    y: 600,
+    width: 525,
+    height: 192,
   },
   context: null,
   name: {
     text: '',
     color: '#FFFFFFFF',
     x: 65,
-    y: 616.1,
+    y: 620,
     font: {
       family: 'Meiryo',
       size: 25,
@@ -87,21 +98,35 @@ export const actions = {
   /**
    * 画像の描画
    */
-  drawImage ({ state, dispatch }) {
+  async drawImage ({ state, dispatch }) {
     if (state.context == null) {
       return
     }
 
     // Canvas の描画をクリア
-    state.context.clearRect(0, 0, state.size.width, state.size.height)
+    state.context.clearRect(0, 0, state.character.width, state.character.height)
 
-    const img = new Image()
-    img.src = state.imgsrc
-    img.onload = () => {
-      state.context.drawImage(img, 0, 0, state.size.width, state.size.height)
-      dispatch('drawName')
-      dispatch('drawBody')
+    // 画像の読み込み完了までを非同期で行うようにする関数定義
+    const loadImage = function (src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.onload = () => resolve(img)
+        img.onerror = (e) => reject(e)
+        img.src = src
+      })
     }
+
+    // キャラクターの画像描画
+    const characterImage = await loadImage(state.character.src)
+    state.context.drawImage(characterImage, state.character.x, state.character.y, state.character.width, state.character.height)
+
+    // 入力エリアの画像描画
+    const inputAreaImage = await loadImage(state.inputArea.src)
+    state.context.drawImage(inputAreaImage, state.inputArea.x, state.inputArea.y, state.inputArea.width, state.inputArea.height)
+
+    // テキスト描画
+    dispatch('drawName')
+    dispatch('drawBody')
   },
 
   /**
