@@ -156,7 +156,7 @@ export const actions = {
       state.context.fillText(
         line,
         state.body.x,
-        state.body.y + idx * (state.body.font.size + state.font.lineHeightOffset)
+        state.body.y + idx * (state.body.font.size + state.font.lineHeightOffset),
       )
     })
   },
