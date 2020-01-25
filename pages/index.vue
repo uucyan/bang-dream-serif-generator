@@ -1,113 +1,58 @@
 <template lang="pug">
 v-layout.px-2.py-2.row.wrap
-  v-flex.lg6.sm12.xs12.text-center
-    canvas#canvas(:width='size.width' :height='size.height' ref='canvas')
-  v-flex.lg6.sm12.xs12.align-self-center(v-if='context != null')
-    v-text-field.textarea(v-model='name', outline hide-details label='名前', rows='3', color='#333', style='margin: auto;', @input='drawImage')
-    v-textarea.textarea(v-model='body', outline hide-details label='本文', rows='3', color='#333', style='margin: auto;', @input='drawImage')
+  v-flex.text-center
+    Canvas
+
+  v-flex.lg6.sm12.xs12.align-self-center
+    v-layout.pt-2
+      NameTextField
+
+    v-layout.pt-2
+      BodyTextarea
+
     v-layout
-      v-flex.mr-1
-        v-slider(v-model='font.size', label='フォントサイズ', color='#333', min='10', max='150', @input='drawImage')
-      v-flex.ml-2
-        v-text-field(v-model='font.size', hide-details color='#333', type='number', suffix='px', style='width: 56px;', @input='drawImage')
+      v-expansion-panels
+        v-expansion-panel(style='background-color: transparent; border-radius: 28px;')
+          v-expansion-panel-header 名前の詳細設定
+          v-expansion-panel-content
+            v-layout.pt-2.text-center
+              v-flex.pl-2.pr-2
+                NameColorPicker
+            v-layout.pt-2
+              NameFontSizeSlider
+
+    v-layout.pt-4
+      v-expansion-panels
+        v-expansion-panel(style='background-color: transparent; border-radius: 28px;')
+          v-expansion-panel-header 本文の詳細設定
+          v-expansion-panel-content
+            v-layout.pt-2
+              BodyColorPicker
+            v-layout.pt-2
+              BodyFontSizeSlider
 </template>
 
 <script>
+import Canvas from '~/components/generator/Canvas'
+import NameTextField from '~/components/generator/form/NameTextField'
+import NameColorPicker from '~/components/generator/form/NameColorPicker'
+import NameFontSizeSlider from '~/components/generator/form/NameFontSizeSlider'
+import BodyTextarea from '~/components/generator/form/BodyTextarea'
+import BodyColorPicker from '~/components/generator/form/BodyColorPicker'
+import BodyFontSizeSlider from '~/components/generator/form/BodyFontSizeSlider'
+
 export default {
-  data () {
-    return {
-      // フォントの設定
-      font: {
-        family: 'Meiryo',
-        size: 25,
-        lineHeightOffset: 4,
-      },
-      // TODO: 一旦固定にしてる
-      imgsrc: 'image/chisato_shirasagi.png',
-      // 実際に表示する画像サイズ（Canvas サイズもこれを使用する）
-      size: {
-        width: 525,
-        height: 788,
-      },
-      context: null,
-      name: '',
-      body: '',
-    }
-  },
-  mounted () {
-    // Canvas の初期化
-    this.initCanvas()
-    // 画像描画
-    this.drawImage()
-  },
-  methods: {
-    /**
-     * Canvas の初期化
-     */
-    initCanvas () {
-      this.context = this.$refs.canvas.getContext('2d')
-      this.context.textAlign = 'left'
-      this.context.textBaseline = 'middle'
-    },
-
-    /**
-     * 画像に名前を描画
-     */
-    drawName () {
-      this.context.fillStyle = '#ffffff'
-      this.context.fillText(this.name, 65, 616.1)
-    },
-
-    /**
-     * 画像に本文を描画
-     */
-    drawBody () {
-      this.context.fillStyle = '#000000'
-      const body = this.body
-
-      let lines = [body]
-
-      if (body.includes('\n')) {
-        lines = body.split('\n')
-      }
-
-      lines.forEach((line, idx) => {
-        this.context.fillText(
-          line,
-          70, // X 座標
-          657 + idx * (this.font.size + this.font.lineHeightOffset) // Y 座標
-        )
-      })
-    },
-
-    /**
-     * 画像の描画
-     */
-    drawImage () {
-      // Canvas のクリア
-      this.context.clearRect(0, 0, this.size.width, this.size.height)
-
-      const img = new Image()
-      img.src = this.imgsrc
-      img.onload = () => {
-        this.context.drawImage(img, 0, 0, this.size.width, this.size.height)
-        this.context.font = `${this.font.size}px '${this.font.family}'`
-        this.drawName()
-        this.drawBody()
-      }
-    },
+  components: {
+    Canvas,
+    NameTextField,
+    NameColorPicker,
+    NameFontSizeSlider,
+    BodyTextarea,
+    BodyColorPicker,
+    BodyFontSizeSlider,
   },
 }
 </script>
 
 <style lang="scss" scoped>
-#canvas {
-  @media screen and (max-width: 525px) {
-    width: 100%;
-  }
-}
-
-.textarea {
-  font-size: 18px;
-}
 </style>
