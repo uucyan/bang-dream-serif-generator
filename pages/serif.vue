@@ -33,13 +33,13 @@ v-layout.px-2.py-2.row.wrap
 </template>
 
 <script>
-import Canvas from '~/components/generator/Canvas'
-import NameTextField from '~/components/generator/form/NameTextField'
-import NameColorPicker from '~/components/generator/form/NameColorPicker'
-import NameFontSizeSlider from '~/components/generator/form/NameFontSizeSlider'
-import BodyTextarea from '~/components/generator/form/BodyTextarea'
-import BodyColorPicker from '~/components/generator/form/BodyColorPicker'
-import BodyFontSizeSlider from '~/components/generator/form/BodyFontSizeSlider'
+import Canvas from '~/components/serif/Canvas'
+import NameTextField from '~/components/serif/form/NameTextField'
+import NameColorPicker from '~/components/serif/form/NameColorPicker'
+import NameFontSizeSlider from '~/components/serif/form/NameFontSizeSlider'
+import BodyTextarea from '~/components/serif/form/BodyTextarea'
+import BodyColorPicker from '~/components/serif/form/BodyColorPicker'
+import BodyFontSizeSlider from '~/components/serif/form/BodyFontSizeSlider'
 
 export default {
   components: {
