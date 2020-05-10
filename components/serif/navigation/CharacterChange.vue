@@ -5,7 +5,8 @@ v-bottom-sheet(v-model='sheet', hide-overlay)
       span キャラ変更
       v-icon mdi-image-filter
 
-  v-sheet.text-center
+  v-sheet.text-center.sheet(height='1000' max-height='1000')
+    v-btn.mt-6(text='', color='error', @click='sheet = !sheet') 閉じる
     v-row
       v-col(cols='12', sm='6', offset-sm='3')
         v-card
@@ -17,8 +18,6 @@ v-bottom-sheet(v-model='sheet', hide-overlay)
                     template(v-slot:placeholder='')
                       v-row.fill-height.ma-0(align='center', justify='center')
                         v-progress-circular(indeterminate='', color='grey lighten-5')
-
-    v-btn.mt-6(text='', color='error', @click='sheet = !sheet') 閉じる
 </template>
 
 <script>
