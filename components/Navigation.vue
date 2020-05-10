@@ -5,8 +5,8 @@ v-bottom-navigation(scroll-target='#container' absolute grow color='teal')
 </template>
 
 <script>
-import Save from '~/components/serif/Navigation/Save'
-import CharacterChange from '~/components/serif/Navigation/CharacterChange'
+import Save from '~/components/serif/navigation/Save'
+import CharacterChange from '~/components/serif/navigation/CharacterChange'
 
 export default {
   components: {
